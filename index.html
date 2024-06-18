@@ -5,42 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RipMuxiv Studio Support</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            text-align: center; /* Center alignment for the content */
-            padding-top: 50px; /* Add some padding at the top */
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .full-screen-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .support-container {
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            background-color: #ffffff;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
         }
         h1 {
+            font-size: 2.5rem;
             color: #333;
+            margin-bottom: 20px;
         }
         p {
-            color: #666;
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .contact-methods {
+            list-style-type: none;
+        }
+        .contact-methods li {
+            margin-bottom: 10px;
         }
         a {
-            color: #0088cc;
+            color: #0077cc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .icon {
+            vertical-align: middle;
+            margin-right: 8px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Welcome to RipMuxiv Studio Support</h1>
-        <p>If you require any assistance or have any questions about our products, please feel free to contact us via email at <a href="ripmuxiv@foxmail.com">email@example.com</a>.</p>
-        <p>We strive for excellence in customer satisfaction and will respond to your inquiry as quickly as possible.</p>
+    <div class="full-screen-container">
+        <div class="support-container">
+            <h1>Welcome to RipMuxiv Studio Support</h1>
+            <p>If you require any assistance or have questions about our products, please feel free to contact us through one of the following methods:</p>
 
-        <!-- You can add more content here such as FAQs, links to product manuals, or a contact form -->
+            <ul class="contact-methods">
+                <!-- Email -->
+                <li><a href="mailto:email@example.com"><img src="https://example.com/email-icon.png" alt="Email" class="icon">email@example.com</a></li>
+
+                <!-- Discord -->
+                <li><a href="https://discord.gg/your_discord_invite"><img src="https://example.com/discord-icon.png" alt="Discord" class="icon">Join Our Discord</a></li>
+
+                <!-- YouTube -->
+                <li><a href="https://www.youtube.com/channel/your_channel_id"><img src="https://example.com/youtube-icon.png" alt="YouTube" class="e icon">Subscribe on YouTube</a></li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
