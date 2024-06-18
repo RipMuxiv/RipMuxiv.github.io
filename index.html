@@ -1,84 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RipMuxiv Studio Support</title>
+    <title>RipMuxiv Studio 官方网站</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background: #f0f0f0;
         }
-        body, html {
-            height: 100%;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-        }
-        .full-screen-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        .support-container {
-            width: 90%;
-            max-width: 800px;
-            padding: 40px;
-            background-color: #ffffff;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+        .header, .footer {
+            background-color: #333;
+            color: white;
             text-align: center;
+            padding: 1rem 0;
         }
-        h1 {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        .contact-methods {
-            list-style-type: none;
-        }
-        .contact-methods li {
-            margin-bottom: 10px;
-        }
-        a {
-            color: #0077cc;
-            text-decoration: none;
+        .branding {
+            margin: 0;
+            font-size: 2.5em;
             font-weight: bold;
         }
-        a:hover {
-            text-decoration: underline;
+        .nav {
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
         }
-        .icon {
-            vertical-align: middle;
-            margin-right: 8px;
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+        }
+        .nav a:hover {
+            color: #ddd;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .product {
+            display: inline-block;
+            width: 200px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            background: white;
+        }
+        .product img {
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+        }
+        .product p {
+            margin: 15px;
+            font-size: 1.1em;
+        }
+        .product-price {
+            color: #008000;
+            font-weight: bold;
+        }
+        .product a {
+            display: block;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 10px;
         }
     </style>
-</head>
-
+</bodv>
 <body>
-    <div class="full-screen-container">
-        <div class="support-container">
-            <h1>Welcome to RipMuxiv Studio Support</h1>
-            <p>If you require any assistance or have questions about our products, please feel free to contact us through one of the following methods:</p>
+    <header class="header">
+        <h1 class="branding">RipMuxiv Studio</h1>
+    </header>
+    <nav class="nav">
+        <a href="#home">主页</a>
+        <a href="#products">产品</a>
+        <a href="#about">关于</a>
+    </nav>
 
-            <ul class="contact-methods">
-                <!-- Email -->
-                <li><a href="mailto:email@example.com"><img src="https://example.com/email-icon.png" alt="Email" class="icon">email@example.com</a></li>
+    <section id="home" class="content">
+         <!-- Your home page content here -->
+    </section>
 
-                <!-- Discord -->
-                <li><a href="https://discord.gg/your_discord_invite"><img src="https://example.com/discord-icon.png" alt="Discord" class="icon">Join Our Discord</a></li>
-
-                <!-- YouTube -->
-                <li><a href="https://www.youtube.com/channel/your_channel_id"><img src="https://example.com/youtube-icon.png" alt="YouTube" class="e icon">Subscribe on YouTube</a></li>
-            </ul>
+    <section id="products" class="content">
+        <h2>我们的产品</h2>
+        <!-- Example Product -->
+        <div class="product">
+            <img src="product-image.jpg" alt="产品名称">
+            <p>产品1 - 描述</p>
+            <p class="product-price">¥199.00</p>
+            <a href="https://assetstore.unity.com/packages/your-package" target="_blank">购买</a>
         </div>
-    </div>
+        <!-- Add more products as needed -->
+    </section>
+
+    <section id="about" class="content">
+        <!-- Your about page content here -->
+    </section>
+
+    <footer class="footer">
+        © 2023 RipMuxiv Studio. All rights reserved.
+    </footer>
 </body>
 </html>
