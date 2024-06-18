@@ -5,105 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RipMuxiv Studio 官方网站</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f0f0f0;
-        }
-        .header, .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-        }
-        .branding {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-        .nav {
-            background-color: #444;
-            display: flex;
-            justify-content: center;
-            padding: 10px 0;
-        }
-        .nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1.2em;
-        }
-        .nav a:hover {
-            color: #ddd;
-        }
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-        .product {
-            display: inline-block;
-            width: 200px;
-            border: 1px solid #ccc;
-            margin: 10px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            border-radius: 5px;
-            background: white;
-        }
-        .product img {
-            width: 100%;
-            border-bottom: 1px solid #ccc;
-        }
-        .product p {
-            margin: 15px;
-            font-size: 1.1em;
-        }
-        .product-price {
-            color: #008000;
-            font-weight: bold;
-        }
-        .product a {
-            display: block;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            margin: 10px;
-        }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex-grow: 1; /* 使内容区域可伸缩填满剩余空间 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product {
+    margin: 20px; /* 产品与产品之间的间隔 */
+    text-align: center; /* 图片与售价居中对齐 */
+}
+
+.product img {
+    max-width: 100%; /* 保证图片响应式缩放 */
+    height: auto;
+}
+
+.footer {
+    padding: 10px;
+    background-color: #f0f0f0; /* 轻灰色背景 */
+    display: flex;
+    justify-content: space-between; /* 底部信息两侧对齐 */
+    align-items: center;
+}
+
+.footer .contact-info {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer .contact-info {
+        margin-top: 10px;
+        align-items: flex-start;
+    }
+}
     </style>
 </bodv>
 <body>
-    <header class="header">
-        <h1 class="branding">RipMuxiv Studio</h1>
-    </header>
-    <nav class="nav">
-        <a href="#home">主页</a>
-        <a href="#products">产品</a>
-        <a href="#about">关于</a>
-    </nav>
-
-    <section id="home" class="content">
-         <!-- Your home page content here -->
-    </section>
-
-    <section id="products" class="content">
-        <h2>我们的产品</h2>
-        <!-- Example Product -->
+    <div class="content">
         <div class="product">
-            <img src="product-image.jpg" alt="产品名称">
-            <p>产品1 - 描述</p>
-            <p class="product-price">¥199.00</p>
-            <a href="https://assetstore.unity.com/packages/your-package" target="_blank">购买</a>
+            <img src="path-to-your-product-image.jpg" alt="产品名称或描述">
+            <p>¥199.00</p>
         </div>
-        <!-- Add more products as needed -->
-    </section>
-
-    <section id="about" class="content">
-        <!-- Your about page content here -->
-    </section>
-
+        <!-- 如果有多个产品，可以复制上面的 .product div 来增加更多产品 -->
+    </div>
     <footer class="footer">
         © 2023 RipMuxiv Studio. All rights reserved.
+        <div class="contact-info">
+            <a href="mailto:your-email@example.com">your-email@example.com</a>
+            <a href="https://discord.gg/yourserver">Discord服务器</a>
+            <a href="https://youtube.com/yourchannel">油管主页</a>
+        </div>
     </footer>
 </body>
 </html>
