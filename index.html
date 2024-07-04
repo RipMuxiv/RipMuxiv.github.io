@@ -297,7 +297,17 @@
         .social-links a:hover {
             color: var(--primary-color);
         }
-
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            display: none;
+            z-index: 1001;
+            white-space: nowrap;
+        }
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -370,6 +380,7 @@
             </div>
         </div>
     </footer>
+    <div id="status-tooltip" class="tooltip"></div>
     <script>
         document.getElementById('home-link').addEventListener('click', function() {
             document.getElementById('products-container').classList.remove('hidden');
@@ -378,6 +389,36 @@
         document.getElementById('about-link').addEventListener('click', function() {
             document.getElementById('products-container').classList.add('hidden');
             document.getElementById('about-section').classList.add('visible');
+        });
+
+        const statusMessages = {
+            'reviewing': 'The engine mall has been reviewed in the queue',
+            'making': 'Work in progress',
+            'published': 'The Engine Marketplace is now available',
+            'abandoned': 'This product has been deprecated'
+        };
+
+        const tooltip = document.getElementById('status-tooltip');
+
+        document.querySelectorAll('.status').forEach(el => {
+            el.addEventListener('mouseenter', (event) => {
+                const statusClass = Array.from(el.classList).find(cls => statusMessages[cls]);
+                if (statusClass) {
+                    tooltip.textContent = statusMessages[statusClass];
+                    tooltip.style.top = `${event.clientY + 10}px`;
+                    tooltip.style.left = `${event.clientX + 10}px`;
+                    tooltip.style.display = 'block';
+                }
+            });
+
+            el.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+
+            el.addEventListener('mousemove', (event) => {
+                tooltip.style.top = `${event.clientY + 10}px`;
+                tooltip.style.left = `${event.clientX + 10}px`;
+            });
         });
     </script>
 </body>
