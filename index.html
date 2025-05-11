@@ -308,6 +308,138 @@
             z-index: 1001;
             white-space: nowrap;
         }
+        /* 新增视频模态框样式 */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity var(--transition-time);
+        }
+
+        .video-modal.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .close-video {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2001;
+            transition: background-color var(--transition-time);
+        }
+
+        .close-video:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            padding: 10px 20px;
+            opacity: 0;
+            transition: opacity var(--transition-time);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .video-container:hover .video-controls {
+            opacity: 1;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .progress-thumb {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity var(--transition-time), left 0.1s linear;
+        }
+
+        .progress-container:hover .progress-thumb {
+            opacity: 1;
+        }
+
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .play-pause, .fullscreen {
+            color: white;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: transform var(--transition-time);
+        }
+
+        .play-pause:hover, .fullscreen:hover {
+            transform: scale(1.1);
+        }
+
+        .time {
+            color: white;
+            font-size: 14px;
+        }
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -411,17 +543,16 @@
                     </div>
                 </div>
                 <div class="product">
-                    <img src="default.jpg" alt="Default Product Image">
-                    <a href="https://example.com/product4" target="_blank">往期作品</a>
+                    <img src="Products/A.png" alt="Default Product Image" class="product-link" data-video="Videos/A.mp4">
+                    <a href="https://example.com/product4" target="_blank">Video</a>
                     <div class="status abandoned">Obsolete</div>
                     <div class="market-logos">
                         <img src="unity.png" alt="Unity" class="market-logo">
-                        <img src="unreal.png" alt="Unreal" class="market-logo">
                     </div>
                 </div>
                 <div class="product">
                     <img src="default.jpg" alt="Default Product Image">
-                    <a href="https://example.com/product4" target="_blank">Product</a>
+                    <a href="https://example.com/product4" target="_blank">Null</a>
                     <div class="status abandoned">Obsolete</div>
                     <div class="market-logos">
                         <img src="unity.png" alt="Unity" class="market-logo">
@@ -433,6 +564,32 @@
         <div class="about-section" id="about-section">
             <h2>About RipMuxiv Studio</h2>
             <p>Hello everyone! Are you still worried about those questions about art? RipMxuiv Studio is trying to solve them for you. And you, my friend! Just focus on your project design! If you have any questions, don't hesitate to contact us for support! It's in the bottom right!</p>
+        </div>
+        <!-- 新增视频模态框 -->
+        <div class="video-modal" id="video-modal">
+            <div class="video-container">
+                <div class="close-video" id="close-video">
+                    <i class="fas fa-times"></i>
+                </div>
+                <video id="modal-video">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-controls">
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                        <div class="progress-thumb" id="progress-thumb"></div>
+                    </div>
+                    <div class="control-buttons">
+                        <div class="play-pause" id="play-pause">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="time" id="video-time">00:00 / 00:00</div>
+                        <div class="fullscreen" id="fullscreen">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <footer>
@@ -487,6 +644,107 @@
                 tooltip.style.left = `${event.clientX + 10}px`;
             });
         });
+        // 新增视频相关的JavaScript代码
+        const videoModal = document.getElementById('video-modal');
+        const modalVideo = document.getElementById('modal-video');
+        const closeVideo = document.getElementById('close-video');
+        const playPauseBtn = document.getElementById('play-pause');
+        const fullscreenBtn = document.getElementById('fullscreen');
+        const videoTime = document.getElementById('video-time');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressThumb = document.getElementById('progress-thumb');
+
+        // 为所有产品链接添加点击事件
+        document.querySelectorAll('.product-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // 阻止默认跳转行为
+
+                const videoSrc = this.getAttribute('data-video');
+                if (videoSrc) {
+                    modalVideo.src = videoSrc;
+                    videoModal.classList.add('visible');
+                    setTimeout(() => {
+                        modalVideo.play();
+                    }, 300); // 等待模态框动画完成后播放视频
+                } else {
+                    // 如果没有视频，执行原来的链接行为
+                    window.open(this.href, '_blank');
+                }
+            });
+        });
+
+        // 关闭视频
+        closeVideo.addEventListener('click', () => {
+            modalVideo.pause();
+            videoModal.classList.remove('visible');
+        });
+
+        // 点击模态框背景关闭视频
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                modalVideo.pause();
+                videoModal.classList.remove('visible');
+            }
+        });
+
+        // 播放/暂停视频
+        playPauseBtn.addEventListener('click', () => {
+            if (modalVideo.paused) {
+                modalVideo.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                modalVideo.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        // 全屏控制
+        fullscreenBtn.addEventListener('click', () => {
+            const videoContainer = modalVideo.parentElement;
+            if (videoContainer.requestFullscreen) {
+                videoContainer.requestFullscreen();
+            } else if (videoContainer.webkitRequestFullscreen) { /* Safari */
+                videoContainer.webkitRequestFullscreen();
+            } else if (videoContainer.msRequestFullscreen) { /* IE11 */
+                videoContainer.msRequestFullscreen();
+            }
+        });
+
+        // 更新视频时间显示
+        modalVideo.addEventListener('timeupdate', () => {
+            const percent = (modalVideo.currentTime / modalVideo.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            progressThumb.style.left = `${percent}%`;
+
+            const currentTime = formatTime(modalVideo.currentTime);
+            const duration = formatTime(modalVideo.duration);
+            videoTime.textContent = `${currentTime} / ${duration}`;
+        });
+
+        // 视频播放状态变化时更新按钮图标
+        modalVideo.addEventListener('play', () => {
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+
+        modalVideo.addEventListener('pause', () => {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        // 点击进度条跳转视频
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            modalVideo.currentTime = pos * modalVideo.duration;
+        });
+
+        // 格式化时间显示
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '00:00';
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
     </script>
 </body>
 </html>
