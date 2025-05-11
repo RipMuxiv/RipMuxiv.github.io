@@ -440,6 +440,58 @@
             color: white;
             font-size: 14px;
         }
+        /* 新增Unity游戏模态框样式 */
+        .unity-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity var(--transition-time);
+        }
+
+        .unity-modal.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .unity-container {
+            position: relative;
+            width: 960px; /* Unity WebGL项目的宽度 */
+            height: 600px; /* Unity WebGL项目的高度 */
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-unity {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2001;
+            transition: background-color var(--transition-time);
+        }
+
+        .close-unity:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -590,6 +642,14 @@
                         <img src="unity.png" alt="Unity" class="market-logo">
                     </div>
                 </div>
+                <div class="product unity-game-card">
+                    <img src="Products/FPS Map Cargo Ship.png" alt="Default Product Image">
+                    <a href="#" target="_blank">FPS Map Cargo Ship</a>
+                    <div class="status reviewing">Reviewing</div>
+                    <div class="market-logos">
+                        <img src="unity.png" alt="Unity" class="market-logo">
+                    </div>
+                </div>
                 <div class="product">
                     <img src="default.jpg" alt="Default Product Image">
                     <a href="https://example.com/product4" target="_blank">Null</a>
@@ -627,6 +687,29 @@
                         <div class="fullscreen" id="fullscreen">
                             <i class="fas fa-expand"></i>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 新增Unity游戏模态框 -->
+        <div class="unity-modal" id="unity-modal">
+            <div class="unity-container">
+                <div class="close-unity" id="close-unity">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div id="unity-container-modal" class="unity-desktop">
+                    <canvas id="unity-canvas-modal" width=960 height=600></canvas>
+                    <div id="unity-loading-bar-modal">
+                        <div id="unity-logo-modal"></div>
+                        <div id="unity-progress-bar-empty-modal">
+                            <div id="unity-progress-bar-full-modal"></div>
+                        </div>
+                    </div>
+                    <div id="unity-warning-modal"> </div>
+                    <div id="unity-footer-modal">
+                        <div id="unity-webgl-logo-modal"></div>
+                        <div id="unity-fullscreen-button-modal"></div>
+                        <div id="unity-build-title-modal">FPS Map</div>
                     </div>
                 </div>
             </div>
@@ -785,6 +868,109 @@
             const secs = Math.floor(seconds % 60);
             return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
+        // 新增Unity游戏相关的JavaScript代码
+        const unityModal = document.getElementById('unity-modal');
+        const unityCanvas = document.getElementById('unity-canvas-modal');
+        const unityLoadingBar = document.getElementById('unity-loading-bar-modal');
+        const unityProgressBarFull = document.getElementById('unity-progress-bar-full-modal');
+        const unityFullscreenButton = document.getElementById('unity-fullscreen-button-modal');
+        const unityWarning = document.getElementById('unity-warning-modal');
+        const closeUnity = document.getElementById('close-unity');
+
+        // Shows a temporary message banner/ribbon for a few seconds, or
+        // a permanent error message on top of the canvas if type=='error'.
+        // If type=='warning', a yellow highlight color is used.
+        // Modify or remove this function to customize the visually presented
+        // way that non-critical warnings and error messages are presented to the
+        // user.
+        function unityShowBanner(msg, type) {
+            function updateBannerVisibility() {
+                unityWarning.style.display = unityWarning.children.length ? 'block' : 'none';
+            }
+            var div = document.createElement('div');
+            div.innerHTML = msg;
+            unityWarning.appendChild(div);
+            if (type == 'error') div.style = 'background: red; padding: 10px;';
+            else {
+                if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+                setTimeout(function() {
+                    unityWarning.removeChild(div);
+                    updateBannerVisibility();
+                }, 5000);
+            }
+            updateBannerVisibility();
+        }
+
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/WebTest.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/WebTest.data.br",
+            frameworkUrl: buildUrl + "/WebTest.framework.js.br",
+            codeUrl: buildUrl + "/WebTest.wasm.br",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+            productName: "FPS Map",
+            productVersion: "0.1.0",
+            showBanner: unityShowBanner,
+        };
+
+        // By default Unity keeps WebGL canvas render target size matched with
+        // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+        // Set this to false if you want to decouple this synchronization from
+        // happening inside the engine, and you would instead like to size up
+        // the canvas DOM size and WebGL render target sizes yourself.
+        // config.matchWebGLToCanvasSize = false;
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            // Mobile device style: fill the whole browser client area with the game canvas:
+
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            unityCanvas.className = "unity-mobile";
+
+            // To lower canvas resolution on mobile devices to gain some
+            // performance, uncomment the following line:
+            // config.devicePixelRatio = 1;
+
+            unityShowBanner('WebGL builds are not supported on mobile devices.');
+        } else {
+            // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+            unityCanvas.style.width = "960px";
+            unityCanvas.style.height = "600px";
+        }
+
+        // 为Unity游戏卡片添加点击事件
+        document.querySelectorAll('.unity-game-card').forEach(card => {
+            card.addEventListener('click', () => {
+                unityModal.classList.add('visible');
+                unityLoadingBar.style.display = "block";
+
+                var script = document.createElement("script");
+                script.src = loaderUrl;
+                script.onload = () => {
+                    createUnityInstance(unityCanvas, config, (progress) => {
+                        unityProgressBarFull.style.width = 100 * progress + "%";
+                    }).then((unityInstance) => {
+                        unityLoadingBar.style.display = "none";
+                        unityFullscreenButton.onclick = () => {
+                            unityInstance.SetFullscreen(1);
+                        };
+                    }).catch((message) => {
+                        alert(message);
+                    });
+                };
+                document.body.appendChild(script);
+            });
+        });
+
+        // 关闭Unity游戏模态框
+        closeUnity.addEventListener('click', () => {
+            unityModal.classList.remove('visible');
+            // 可以在这里添加销毁Unity实例的逻辑，以释放资源
+        });
     </script>
 </body>
 </html>
