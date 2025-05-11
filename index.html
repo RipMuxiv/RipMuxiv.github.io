@@ -160,7 +160,7 @@
             transform: scale(1.05);
             opacity: 0.8;
         }
-        .product a {
+        .product a:not(:has(img)) {
             display: none;
             position: absolute;
             top: 0;
@@ -174,7 +174,7 @@
             border-radius: 10px 10px 0 0;
             transition: opacity var(--transition-time);
         }
-        .product:hover a {
+        .product:hover a:not(:has(img)) {
             display: block;
         }
         .market-logos {
@@ -334,7 +334,6 @@
                     <div class="status published">Published</div>
                     <div class="market-logos">
                         <img src="unity.png" alt="Unity" class="market-logo">
-                        <!-- <img src="unreal.png" alt="Unreal" class="market-logo"> -->
                     </div>
                 </div>
                 <div class="product">
@@ -409,6 +408,15 @@
                     <div class="status making">Making</div>
                     <div class="market-logos">
                         <img src="unity.png" alt="Unity" class="market-logo">
+                    </div>
+                </div>
+                <div class="product">
+                    <img src="default.jpg" alt="Default Product Image">
+                    <a href="https://example.com/product4" target="_blank">往期作品</a>
+                    <div class="status abandoned">Obsolete</div>
+                    <div class="market-logos">
+                        <img src="unity.png" alt="Unity" class="market-logo">
+                        <img src="unreal.png" alt="Unreal" class="market-logo">
                     </div>
                 </div>
                 <div class="product">
